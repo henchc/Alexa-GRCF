@@ -1,4 +1,3 @@
-
 // RSS feed URL for GRCF
 var url = 'https://www.feederninja.com/api/content?type=rss&param=https%3A%2F%2Fbeyondthewhiteboard.com%2Fgyms%2F2755.atom&limit=1000&nextUrl=';
 
@@ -25,10 +24,10 @@ https.get( url, function( response ) {
 
         // start text string
         var text = 'This workout was posted on ' + dateString + '.\n\n';
-        text += 'There are ' + numParts + '.\n\n'
 
         // loop through parts
         var partCount = 1;
+        var wod = ''
         for(var i = 0; i < numParts - 1; i++) {
 
         	// get title and desc and clean some
@@ -37,10 +36,13 @@ https.get( url, function( response ) {
 
     		// skip if a user post
     		if (title.indexOf('posted')	== -1) {
-    	    	text += 'Part ' + partCount + ' is ' + title + ':\n\n' + desc + ' \n\n';
+    	    	wod += 'Part ' + partCount + ' is ' + title + ':\n\n' + desc + ' \n\n';
     	    	partCount += 1;
     		};
         };
+
+        text += 'There are ' + (partCount-1) + ' parts.\n\n'
+        text += wod
 
 
         console.log(text);
