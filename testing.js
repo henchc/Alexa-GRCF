@@ -28,7 +28,7 @@ https.get( url, function( response ) {
         // loop through parts
         var partCount = 1;
         var wod = ''
-        for(var i = 0; i < numParts - 1; i++) {
+        for (var i = 0; i < numParts - 1; i++) {
 
         	// get title and desc and clean some
     		var title = json.data.feeds[i].title.trim().replace(':', '');
@@ -41,8 +41,15 @@ https.get( url, function( response ) {
     		};
         };
 
-        text += 'There are ' + (partCount-1) + ' parts.\n\n'
+        if ((partCount-1) > 1) {
+        	text += 'There are ' + (partCount-1) + ' parts.\n\n'
+        } else {
+        	text += 'There is ' + (partCount-1) + ' part.\n\n'
+        }
+
+
         text += wod
+        text += "You're awesome.\n\n"
 
 
         console.log(text);
