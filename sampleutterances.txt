@@ -1,8 +1,8 @@
-WhatIs {what is the workout at grassroots | Workout}
-WhatIs {what's the workout at grassroots | Workout}
-WhatIs {what is the wod at grassroots | Workout}
-WhatIs {what's the workout at grassroots | Workout}
-WhatIs {what is the workout at GRCF | Workout}
-WhatIs {what's the workout at GRCF | Workout}
-WhatIs {what is the wod at GRCF | Workout}
-WhatIs {what's the workout at GRCF | Workout}
+WhatIsTheWOD {what is the workout at grassroots | Workout}
+WhatIsTheWOD {what's the workout at grassroots | Workout}
+WhatIsTheWOD {what is the wod at grassroots | Workout}
+WhatIsTheWOD {what's the workout at grassroots | Workout}
+WhatIsTheWOD {what is the workout at GRCF | Workout}
+WhatIsTheWOD {what's the workout at GRCF | Workout}
+WhatIsTheWOD {what is the wod at GRCF | Workout}
+WhatIsTheWOD {what's the workout at GRCF | Workout}

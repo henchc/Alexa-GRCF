@@ -38,13 +38,13 @@ https.get( url, function( response ) {
     		if (title.indexOf('posted')	== -1) {
     	    	wod += 'Part ' + partCount + ' is ' + title + ':\n\n' + desc + ' \n\n';
     	    	partCount += 1;
-    		};
+    		}
         };
 
         if ((partCount-1) > 1) {
-        	text += 'There are ' + (partCount-1) + ' parts.\n\n'
+        	text += 'There are ' + (partCount-1) + ' parts.\n\n';
         } else {
-        	text += 'There is ' + (partCount-1) + ' part.\n\n'
+        	text += 'There is ' + (partCount-1) + ' part.\n\n';
         }
 
 
@@ -65,12 +65,6 @@ function timeConverter(UNIX_timestamp){
   var a = new Date(UNIX_timestamp * 1000);
   var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
   var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  var year = a.getFullYear();
-  var month = months[a.getMonth()];
-  var day = days[a.getDay()];
-  var date = a.getDate();
-  var hour = a.getHours();
-  var min = a.getMinutes();
-  var time = day + ', ' + month + ' ' + date + ', ' + year + ' at ' + hour + ':' + min;
+  var time = days[a.getDay()] + ', ' + months[a.getMonth()] + ' ' + a.getDate() + ', ' + a.getFullYear() + ' at ' + a.getHours() + ':' + a.getMinutes();
   return time;
 }
