@@ -1,6 +1,6 @@
 {
   "intents": [ {
-    "intent": "WhatIs",
+    "intent": "WhatIsTheWOD",
     "slots": [ {
        "name": "Workout",
        "type": "LITERAL"
