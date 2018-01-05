@@ -1,4 +1,8 @@
-WhatDoes {what does it feel like in thornton | FeelsLike}
-WhatDoes {what does it feel like outside in thornton | FeelsLike}
-WhatDoes {what is the windchill in thornton | FeelsLike}
-WhatDoes {what is the weather in thornton | FeelsLike}
+WhatIs {what is the workout at grassroots | Workout}
+WhatIs {what's the workout at grassroots | Workout}
+WhatIs {what is the wod at grassroots | Workout}
+WhatIs {what's the workout at grassroots | Workout}
+WhatIs {what is the workout at GRCF | Workout}
+WhatIs {what's the workout at GRCF | Workout}
+WhatIs {what is the wod at GRCF | Workout}
+WhatIs {what's the workout at GRCF | Workout}

@@ -1,8 +1,8 @@
 {
   "intents": [ {
-    "intent": "WhatDoes",
+    "intent": "WhatIs",
     "slots": [ {
-       "name": "FeelsLike",
+       "name": "Workout",
        "type": "LITERAL"
     } ]
   } ]
