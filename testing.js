@@ -16,22 +16,21 @@ https.get( url, function( response ) {
         var unixTimeStamp = json.data.feeds[0].date;
         var dateString = timeConverter(unixTimeStamp);
 
-        var text = 'This workout was posted on ' + dateString + '. ';
-        var partCount = 1
+        var text = 'This workout was posted on ' + dateString + '. \n\n';
+        var partCount = 1;
         for(var i = 0; i < numParts - 1; i++) {
 
-    		var title = json.data.feeds[i].title.trim();
+    		var title = json.data.feeds[i].title.trim().replace(':', '');
     		var desc = json.data.feeds[i].desc.trim();
 
     		if (title.indexOf('posted')	== -1) {
-    	    	text += 'Part ' + partCount + ' is ' + title + ': ' + desc + ' \n';
-    	    	partCount += 1
+    	    	text += 'Part ' + partCount + ' is ' + title + ':\n\n' + desc + ' \n\n';
+    	    	partCount += 1;
     		};
-
         };
 
 
-        console.log(text)
+        console.log(text);
 
         // output( text, context );
 
@@ -42,7 +41,7 @@ https.get( url, function( response ) {
 function timeConverter(UNIX_timestamp){
   var a = new Date(UNIX_timestamp * 1000);
   var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+  var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   var year = a.getFullYear();
   var month = months[a.getMonth()];
   var day = days[a.getDay()];
