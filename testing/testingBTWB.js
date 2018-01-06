@@ -14,74 +14,59 @@ https.get( url, function( response ) {
 
     response.on( 'end', function() {
 
-        const $ = cheerio.load(data);
-        var date = $('#track-event-list > h3:nth-child(2)').text().replace(/\s\s+/g, ' ').trim()
-        var title = $('#track-event-list > div:nth-child(3) > div.clearfix > div.pull-left > a').text();
-        var desc = $('#track-event-list > div:nth-child(3)').text();
-        desc = cleanDescription(desc, title);
-        console.log(date);
-        // $('h3').each(function(i, elem) {
-        //   console.log($(this).text());
-        // });
+          // load page source
+          const $ = cheerio.load(data);
 
-      //   var json = JSON.parse( data );
+          // get first date element
+          var dateElement = $('#track-event-list > h3:nth-child(2)');
 
-      //   // get number of parts of WOD
-      //   var numParts = json.data.feeds.length;
+          // reformat so day is first the month and date
+          var dateArray = dateElement.text().replace(/\s\s+/g, ' ').trim().split(' ');
+          var date = dateArray[2] + ', ' + dateArray[0] + ' ' + dateArray[1];
 
-      //   // get time stamp and convert
-      //   var unixTimeStamp = json.data.feeds[0].date;
-      //   var dateString = timeConverter(unixTimeStamp);
+          // build empty text
+          var alexaText = '';
 
-      //   // start text string
-      //   var text = 'This workout was posted on ' + dateString + '.\n\n';
+          // move to first div wod part
+          var nextElement = dateElement.next();
+          var numParts = 0;
 
-      //   // loop through parts
-      //   var partCount = 1;
-      //   var wod = ''
-      //   for (var i = 0; i < numParts - 1; i++) {
+          // cycle through all parts until hr element
+          while (nextElement.is('hr') == false) {
+              numParts += 1
+              var title = nextElement.find('a').text();
+              title = cleanText(title);
+              alexaText += "Part " + numParts + " is: \n\n" + title + '\n\n';
 
-      //   	// get title and desc and clean some
-    		// var title = json.data.feeds[i].title.trim().replace(':', '');
-    		// var desc = json.data.feeds[i].desc.trim();
+              var desc = nextElement.text();
+              desc = cleanText(desc, title);
+              alexaText += desc + '\n\n';
 
-    		// // skip if a user post
-    		// if (title.indexOf('posted')	== -1) {
-    	 //    	wod += 'Part ' + partCount + ' is ' + title + ':\n\n' + desc + ' \n\n';
-    	 //    	partCount += 1;
-    		// }
-      //   };
+              nextElement = nextElement.next();
+          }
 
-      //   if ((partCount-1) > 1) {
-      //   	text += 'There are ' + (partCount-1) + ' parts.\n\n';
-      //   } else {
-      //   	text += 'There is ' + (partCount-1) + ' part.\n\n';
-      //   }
+          // start text string
+          if (numParts > 1) {
+            var alexaPreText = 'The workout for ' + date + ' has ' + numParts + ' parts:\n\n';
+          } else {
+            var alexaPreText = 'The workout for ' + date + ' has ' + numParts + ' part:\n\n';
+          }
 
+          // post text string
+          var alexaPostText = "Good luck. You're awesome."
 
-      //   text += wod
-      //   text += "You're awesome.\n\n"
+          // concatenate string
+          alexaText = alexaPreText + alexaText + alexaPostText;
 
+          console.log(alexaText)
 
-      //   console.log(text);
-
-        // output( text, context );
+          // output( text, context );
 
     } );
 } );
 
-// https://stackoverflow.com/questions/847185/convert-a-unix-timestamp-to-time-in-javascript
-// convert UNIX timestamps
-function timeConverter(UNIX_timestamp){
-  var a = new Date(UNIX_timestamp * 1000);
-  var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  var time = days[a.getDay()] + ', ' + months[a.getMonth()] + ' ' + a.getDate() + ', ' + a.getFullYear() + ' at ' + a.getHours() + ':' + a.getMinutes();
-  return time;
-}
-
-function cleanDescription(desc, title){
-    desc = desc.replace("Show More", "").replace("Show Less", "").replace("View Results", "").replace(title, "").replace(/\s\s+/g, ' ').trim();
-
-    return desc;
+// clean text from divs
+function cleanText(text, title){
+    text = text.replace("Show More", "").replace("Show Less", "").replace("View Results", "").replace(title, "").replace(/\s\s+/g, ' ').trim();
+    return text;
 }
