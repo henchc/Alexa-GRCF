@@ -1,72 +1,82 @@
-// RSS feed URL for GRCF
-var url = 'https://beyondthewhiteboard.com/gyms/2755-grassroots-crossfit/wods';
+module.exports = {
 
-// load https requests lib
-const https = require( 'https' );
-const cheerio = require('cheerio')
+  getData: function () {
 
-// make GET req and parse JSON response
-https.get( url, function( response ) {
+    // RSS feed URL for GRCF
+    var url = 'https://beyondthewhiteboard.com/gyms/2755-grassroots-crossfit/wods';
 
-    var data = '';
+    // load https requests lib
+    const https = require( 'https' );
+    const cheerio = require('cheerio')
 
-    response.on( 'data', function( x ) { data += x; } );
+    // make GET req and capture response
+    https.get( url, function( response ) {
 
-    response.on( 'end', function() {
+        var data = '';
 
-          // load page source
-          const $ = cheerio.load(data);
+        response.on( 'data', function( x ) { data += x; } );
 
-          // get first date element
-          var dateElement = $('#track-event-list > h3:nth-child(2)');
+        response.on( 'end', function() {
 
-          // reformat so day is first the month and date
-          var dateArray = dateElement.text().replace(/\s\s+/g, ' ').trim().split(' ');
-          var date = dateArray[2] + ', ' + dateArray[0] + ' ' + dateArray[1];
+              // load page source
+              const $ = cheerio.load(data);
 
-          // build empty text
-          var alexaText = '';
+              // get first date element
+              var dateElement = $('#track-event-list > h3:nth-child(2)');
 
-          // move to first div wod part
-          var nextElement = dateElement.next();
-          var numParts = 0;
+              // reformat so day is first the month and date
+              var dateArray = dateElement.text().replace(/\s\s+/g, ' ').trim().split(' ');
+              var date = dateArray[2] + ', ' + dateArray[0] + ' ' + dateArray[1];
 
-          // cycle through all parts until hr element
-          while (nextElement.is('hr') == false) {
-              numParts += 1
-              var title = nextElement.find('a').text();
-              title = cleanText(title);
-              alexaText += "Part " + numParts + " is: \n\n" + title + '\n\n';
+              // build empty text
+              var alexaText = '';
 
-              var desc = nextElement.text();
-              desc = cleanText(desc, title);
-              alexaText += desc + '\n\n';
+              // move to first div wod part
+              var nextElement = dateElement.next();
+              var numParts = 0;
 
-              nextElement = nextElement.next();
-          }
+              // cycle through all parts until hr element
+              while (nextElement.is('hr') == false) {
+                  numParts += 1
+                  var title = nextElement.find('a').text();
+                  title = cleanText(title);
+                  alexaText += "Part " + numParts + " is: \n\n" + title + '\n\n';
 
-          // start text string
-          if (numParts > 1) {
-            var alexaPreText = 'The workout for ' + date + ' has ' + numParts + ' parts:\n\n';
-          } else {
-            var alexaPreText = 'The workout for ' + date + ' has ' + numParts + ' part:\n\n';
-          }
+                  var desc = nextElement.text();
+                  desc = cleanText(desc, title);
+                  alexaText += desc + '\n\n';
 
-          // post text string
-          var alexaPostText = "Good luck. You're awesome."
+                  nextElement = nextElement.next();
+              }
 
-          // concatenate string
-          alexaText = alexaPreText + alexaText + alexaPostText;
+              // start text string
+              if (numParts > 1) {
+                var alexaPreText = 'The workout for ' + date + ' has ' + numParts + ' parts:\n\n';
+              } else {
+                var alexaPreText = 'The workout for ' + date + ' has ' + numParts + ' part:\n\n';
+              }
 
-          console.log(alexaText)
+              // post text string
+              var alexaPostText = "Good luck. You're awesome."
 
-          // output( text, context );
+              // concatenate string
+              alexaText = alexaPreText + alexaText + alexaPostText;
 
-    } );
-} );
+              return alexaText;
+        });
+    });
 
-// clean text from divs
-function cleanText(text, title){
-    text = text.replace("Show More", "").replace("Show Less", "").replace("View Results", "").replace(title, "").replace(/\s\s+/g, ' ').trim();
-    return text;
-}
+    // clean text from divs
+    function cleanText(text, title){
+        text = text.replace("Show More", "").replace("Show Less", "").replace("View Results", "").replace(title, "").replace(/\s\s+/g, ' ').trim();
+        return text;
+    };
+
+    function convertDate(dateElement) {
+        var dateArray = dateElement.text().replace(/\s\s+/g, ' ').trim().split(' ');
+        var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        var date = '2017-' + (months.indexOf(dateArray[0])+1) + '-' + dateArray[1];
+        return date;
+    };
+  }
+};
