@@ -1,3 +1,8 @@
+*.zip
+.ask*
+lambda/custom/node_modules*
+lambda/custom/package.json
+
 # Logs
 logs
 *.log

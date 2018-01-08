@@ -1,0 +1,30 @@
+{
+  "skillManifest": {
+    "publishingInformation": {
+      "locales": {
+        "en-US": {
+          "summary": "This skill gets the WOD for Grassroots Crossfit from Beyond the Whiteboard.",
+          "examplePhrases": [
+            "Alexa open Grassroots",
+            "Alexa ask Grassroots what's the workout",
+            "Alexa ask Grassroots what's the wod"
+          ],
+          "name": "GRCF-WOD",
+          "description": "This skill gets the WOD for Grassroots Crossfit from Beyond the Whiteboard. As of now it only gets the latest post, but we will add functionality to get any date."
+        }
+      },
+      "isAvailableWorldwide": true,
+      "testingInstructions": "Check example phrases.",
+      "category": "HEALTH_AND_FITNESS",
+      "distributionCountries": []
+    },
+    "apis": {
+      "custom": {
+        "endpoint": {
+          "sourceDir": "lambda/custom"
+        }
+      }
+    },
+    "manifestVersion": "1.0"
+  }
+}

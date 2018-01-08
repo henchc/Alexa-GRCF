@@ -1,0 +1,46 @@
+{
+    "interactionModel":{
+        "languageModel":{
+            "invocationName":"grassroots",
+            "types":[],
+            "intents":[
+                {
+                  "name": "AMAZON.CancelIntent",
+                  "samples": []
+                },
+                {
+                  "name": "AMAZON.HelpIntent",
+                  "samples": []
+                },
+                {
+                  "name": "AMAZON.StopIntent",
+                  "samples": []
+                },
+                {
+                    "name":"GetWodIntent",
+                    "slots":[
+
+                    ],
+                    "samples":[
+                        "what's the workout",
+                        "what's the wod"
+                    ]
+                },
+                {
+                    "name":"GetWodDateIntent",
+                    "slots":[
+                        {
+                            "name":"date",
+                            "type":"AMAZON.DATE"
+                        }
+                    ],
+                    "samples":[
+                        "what's the workout for {date}",
+                        "what was the workout on {date}",
+                        "what was the workout {date}"
+                    ]
+                }
+            ]
+        }
+    }
+}
