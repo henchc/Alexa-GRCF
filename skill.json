@@ -5,12 +5,12 @@
         "en-US": {
           "summary": "This skill gets the WOD for Grassroots Crossfit from Beyond the Whiteboard.",
           "examplePhrases": [
-            "Alexa open Grassroots",
-            "Alexa ask Grassroots what's the workout",
-            "Alexa ask Grassroots what's the wod"
+            "Alexa open Grassroots Crossfit",
+            "Alexa ask Grassroots Crossfit what's the workout today",
+            "Alexa ask Grassroots Crossfit what was the workout yesterday"
           ],
           "name": "GRCF-WOD",
-          "description": "This skill gets the WOD for Grassroots Crossfit from Beyond the Whiteboard. As of now it only gets the latest post, but we will add functionality to get any date."
+          "description": "This skill fetches the WOD for Grassroots Crossfit from Beyond the Whiteboard. It can also handle requests for specfic dates."
         }
       },
       "isAvailableWorldwide": true,

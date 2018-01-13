@@ -1,7 +1,7 @@
 {
     "interactionModel":{
         "languageModel":{
-            "invocationName":"grassroots",
+            "invocationName":"grassroots crossfit",
             "types":[],
             "intents":[
                 {
@@ -36,8 +36,19 @@
                     ],
                     "samples":[
                         "what's the workout for {date}",
+                        "what is the workout for {date}",
+                        "what is the wod for {date}",
                         "what was the workout on {date}",
-                        "what was the workout {date}"
+                        "what was the workout {date}",
+                        "what was the workout from {date}",
+                        "what's the workout from {date}",
+                        "what's the workout on {date}",
+                        "what was the wod on {date}",
+                        "what was the wod {date}",
+                        "what was the wod from {date}",
+                        "what's the wod from {date}",
+                        "what's the wod on {date}",
+                        "what's the wod for {date}"
                     ]
                 }
             ]
