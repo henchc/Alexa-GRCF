@@ -132,7 +132,7 @@ function httpsGet(myData, page, callback) {
                 page += 1;
                 httpsGet(myData, page, callback);
             } else if (wodExists == false) {
-                callback('Sorry, that workout is not available.');
+                callback('Sorry, the workout for ' + formatDate(myData) + ' is not available.');
             }
         });
     });
