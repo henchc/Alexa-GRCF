@@ -126,7 +126,8 @@ function httpsGet(userRequest, page, callback) {
                 }
             });
 
-            // if WOD not found on this page and we have not gone past 3 pages
+            // if WOD not found on this page and not today or future
+            // and we have not gone past 3 pages
             // then recursive call to next page
             if (wodExists == false && differenceInDays(userRequest, todayDate()) <= 0) {
                 callback('Sorry, the workout for ' + formatDate(userRequest) + ' is not available.');
@@ -221,7 +222,7 @@ function todayDate() {
     return yyyy + '-' + mm + '-' + dd;
 }
 
-// difference difference
+// difference in days of two date strings
 function differenceInDays(dateString1, dateString2) {
     var rDateObj = new Date(dateString1);
     var tDateObj = new Date(dateString2);
