@@ -25,7 +25,7 @@ var handlers = {
     },
     'GetWod': function () {
 
-        // placeholder
+        // general assume today
         var myRequest = todayDate();
         var page = 1;
 
@@ -48,7 +48,7 @@ var handlers = {
         if (myRequest == undefined || myRequest.length != 10 ) {
             var errorText = "Sorry, please ask for a valid, specific date."
             this.response.speak(errorText)
-                .cardRenderer('GRCF WOD', errorText);
+                .cardRenderer('GRCF-WOD', errorText);
             this.emit(':responseReady');
         } else {
             myRequest = verifyDate(myRequest);
@@ -59,7 +59,7 @@ var handlers = {
                     console.log("received : " + myResult);
 
                     this.response.speak(myResult)
-                        .cardRenderer('GRCF WOD', myResult);
+                        .cardRenderer('GRCF-WOD', myResult);
                     this.emit(':responseReady');
                 }
             );
@@ -87,7 +87,7 @@ var handlers = {
 };
 
 // make GET req to BTWB
-function httpsGet(myData, page, callback) {
+function httpsGet(userRequest, page, callback) {
 
     // build URL with page num
     var url = 'https://beyondthewhiteboard.com/gyms/2755-grassroots-crossfit/wods?page=' + page;
@@ -119,20 +119,22 @@ function httpsGet(myData, page, callback) {
                 var linkDate = firstPart.attr('href').slice(-10);
 
                 // if match with request, send block to processing
-                if (myData == linkDate) {
+                if (userRequest == linkDate) {
                     wodExists = true;
                     callback(buildText(firstPart, linkDate));
                     return false;
                 }
             });
 
-            // if wod not found on this page and we have not gone past 3 pages
-            // then recursive call back
-            if (wodExists == false && page < 3) {
+            // if WOD not found on this page and we have not gone past 3 pages
+            // then recursive call to next page
+            if (wodExists == false && differenceInDays(userRequest, todayDate()) <= 0) {
+                callback('Sorry, the workout for ' + formatDate(userRequest) + ' is not available.');
+            } else if (wodExists == false && page < 3) {
                 page += 1;
-                httpsGet(myData, page, callback);
+                httpsGet(userRequest, page, callback);
             } else if (wodExists == false) {
-                callback('Sorry, the workout for ' + formatDate(myData) + ' is not available.');
+                callback('Sorry, the workout for ' + formatDate(userRequest) + ' is not available.');
             }
         });
     });
@@ -198,7 +200,7 @@ function buildText(firstPart, date) {
     alexaText = crossfitAbb(alexaText);
 
     // send back alexaText
-    return alexaText;  // this will execute whatever function the caller defined, with one argument
+    return alexaText;
 }
 
 // today
@@ -219,15 +221,25 @@ function todayDate() {
     return yyyy + '-' + mm + '-' + dd;
 }
 
-// verify not in far future
-function verifyDate(dateRequested) {
-    var rDateObj = new Date(dateRequested);
-    var tDateObj = new Date(todayDate());
+// difference difference
+function differenceInDays(dateString1, dateString2) {
+    var rDateObj = new Date(dateString1);
+    var tDateObj = new Date(dateString2);
     var difference = tDateObj.getTime() - rDateObj.getTime()
     var differenceDays = Math.ceil(difference / (1000 * 3600 * 24));
+    return differenceDays;
+}
+
+// verify not in far future
+// AMAZON.DATE if not specified automatically
+// assumes future date
+function verifyDate(dateRequested) {
+    var differenceDays = differenceInDays(dateRequested, todayDate());
     var yearRequested = dateRequested.slice(0, 4);
 
-    if (differenceDays < -2) {
+    // if requested date is > 30 days in future
+    // it is actually a request for the past
+    if (differenceDays < -30) {
         return parseInt(yearRequested) - 1 + dateRequested.slice(4);
     } else {
         return dateRequested;
