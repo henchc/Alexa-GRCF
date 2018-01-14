@@ -152,6 +152,7 @@ function cleanText(text){
 function crossfitAbb(text) {
     text = text.replace(/\//g, ' or ').replace(/#/g, ' pounds').replace("Acc", "\n\nAccessory").replace(/DB/g, "Dumbell");
     text = text.replace(/RM/g, ' rep max').replace('ACC', '\n\nAccessory');
+    text = text.replace(/&/g, 'and');
     return text;
 }
 
@@ -184,13 +185,18 @@ function buildText(firstPart, date) {
     }
 
     // format date to be spoken
-    date = formatDate(date);
+    var dateSpeak = formatDate(date);
 
     // start text string
     if (numParts > 1) {
-      var alexaPreText = '\nThe workout for ' + date + ' has ' + numParts + ' parts:\n\n';
+      var alexaPreText = '\nThe workout for ' + dateSpeak + ' has ' + numParts + ' parts:\n\n';
     } else {
-      var alexaPreText = '\nThe workout for ' + date + ' has ' + numParts + ' part:\n\n';
+      var alexaPreText = '\nThe workout for ' + dateSpeak + ' has ' + numParts + ' part:\n\n';
+    }
+
+    // change to past tense if previous workout
+    if (differenceInDays(date, todayDate()) > 0) {
+      alexaPreText = alexaPreText.replace('has', 'had')
     }
 
     // post text string
