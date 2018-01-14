@@ -15,7 +15,7 @@ exports.handler = function(event, context) {
 // handlers to be sent to main above
 var handlers = {
     'LaunchRequest': function () {
-        this.emit('AMAZON.HelpIntent');
+        this.emit('GetWod');
     },
     'GetWodIntent': function () {
         this.emit('GetWod');
@@ -61,7 +61,6 @@ var handlers = {
                     this.response.speak(myResult)
                         .cardRenderer('GRCF WOD', myResult);
                     this.emit(':responseReady');
-
                 }
             );
         }
@@ -74,7 +73,7 @@ var handlers = {
         this.emit(':responseReady');
     },
     'AMAZON.HelpIntent' : function() {
-        this.response.speak("You can try: 'alexa, ask grassroots crossfit what's the workout today, or 'alexa, ask grassroots crossfit what's the workout for tomorrow', or 'alexa, ask grassroots crossfit what was the workout yesterday'");
+        this.response.speak("You can try: 'ask grassroots crossfit what's the workout today', or 'ask grassroots crossfit what's the workout for tomorrow', or 'ask grassroots crossfit what was the workout yesterday'");
         this.emit(':responseReady');
     },
     'AMAZON.CancelIntent' : function() {
@@ -82,7 +81,8 @@ var handlers = {
         this.emit(':responseReady');
     },
     'Unhandled' : function() {
-        this.response.speak("Sorry, I didn't get that. You can try: 'alexa, ask grassroots crossfit what's the workout today, or 'alexa, ask grassroots crossfit what's the workout for tomorrow', or 'alexa, ask grassroots crossfit what was the workout yesterday'");
+        this.response.speak("Sorry, I didn't get that. You can try: 'ask grassroots crossfit what's the workout today', or 'ask grassroots crossfit what's the workout for tomorrow', or 'ask grassroots crossfit what was the workout yesterday'");
+        this.emit(':responseReady');
     }
 };
 

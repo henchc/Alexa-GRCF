@@ -23,7 +23,11 @@
                     ],
                     "samples":[
                         "what's the workout",
-                        "what's the wod"
+                        "what's the wod",
+                        "what is the workout",
+                        "what is the wod",
+                        "what was the workout",
+                        "what was the wod"
                     ]
                 },
                 {
@@ -36,19 +40,29 @@
                     ],
                     "samples":[
                         "what's the workout for {date}",
-                        "what is the workout for {date}",
-                        "what is the wod for {date}",
-                        "what was the workout on {date}",
-                        "what was the workout {date}",
-                        "what was the workout from {date}",
                         "what's the workout from {date}",
                         "what's the workout on {date}",
-                        "what was the wod on {date}",
-                        "what was the wod {date}",
-                        "what was the wod from {date}",
+                        "what's the workout {date}",
+                        "what was the workout for {date}",
+                        "what was the workout from {date}",
+                        "what was the workout on {date}",
+                        "what was the workout {date}",
+                        "what is the workout for {date}",
+                        "what is the workout from {date}",
+                        "what is the workout on {date}",
+                        "what is the workout {date}",
+                        "what's the wod for {date}",
                         "what's the wod from {date}",
                         "what's the wod on {date}",
-                        "what's the wod for {date}"
+                        "what's the wod {date}",
+                        "what was the wod for {date}",
+                        "what was the wod from {date}",
+                        "what was the wod on {date}",
+                        "what was the wod {date}",
+                        "what is the wod for {date}",
+                        "what is the wod from {date}",
+                        "what is the wod on {date}",
+                        "what is the wod {date}"
                     ]
                 }
             ]
